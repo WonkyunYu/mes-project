@@ -1,0 +1,55 @@
+# Java 빌드 파일
+*.class
+*.log
+*.ctxt
+
+# 패키징 결과물
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE 설정
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# 환경 변수/보안 정보
+.env
+*.key
+*.keystore
+*.jks
+
+# PostgreSQL 관련 (예: 로컬 DB 덤프)
+*.sql
+*.pgsql
+*.dump
+
+# Windows reserved device name 방지
+NUL
