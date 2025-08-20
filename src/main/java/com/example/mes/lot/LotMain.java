@@ -9,7 +9,6 @@ public class LotMain {
 
     public static void main(String[] args) {
         runMenu();
-        // sc.close();  // System.in을 닫으면 Eclipse 콘솔 재사용이 불편하니 보통은 닫지 않음
     }
 
     private static void runMenu() {
@@ -64,7 +63,6 @@ public class LotMain {
     private static void MainSelectAll() {
     	controller.selectAll();
     }
-    
     
     private static void MainPrefixSearch() {
         String prefix = prompt("'SYSTEM' : 검색할 제품명 시작 문자열(prefix)");

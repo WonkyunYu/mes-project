@@ -10,6 +10,62 @@ import java.util.List;
 import com.example.mes.util.DBUtil;
 
 public class LotDao {
+	
+    public List<LotDto> selectAll() {
+        List<LotDto> list = new ArrayList<>();
+        String sql = "SELECT * FROM LOT_LIST";
+
+        try (
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()
+        ) {
+            while (rs.next()) {
+                LotDto dto = new LotDto(
+                    rs.getString("LOT_ID"),
+                    rs.getString("LOT_STATUS"),
+                    rs.getString("LOT_CODE"),
+                    rs.getString("PRODUCT_NAME")
+                );
+                list.add(dto); // 리스트에 추가
+            }
+        } catch (SQLException e) {
+            System.out.println("'SYSTEM' : LOT 조회 실패!");
+            e.printStackTrace();
+        }
+
+        return list; // 리스트 반환
+    }
+
+
+    // 제품명으로 조회 (LIKE 조건)
+    public void prefixSelect(String prefix) {
+        String sql = "SELECT * FROM LOT_LIST WHERE PRODUCT_NAME LIKE ?";
+
+        try (
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setString(1, prefix + "%");
+
+            ResultSet rs = pstmt.executeQuery();
+
+        	while (rs.next()) {
+        	    LotDto dto = new LotDto(
+        	        rs.getString("LOT_ID"),
+        	        rs.getString("LOT_STATUS"),
+        	        rs.getString("LOT_CODE"),
+        	        rs.getString("PRODUCT_NAME")
+        	    );
+        	    System.out.println(dto);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("'SYSTEM' : LOT 조건 조회 실패!");
+            e.printStackTrace();
+        }
+    }
 
     // LOT 등록 (INSERT)
     public int insertLot(LotDto dto) {
@@ -68,63 +124,6 @@ public class LotDao {
             System.out.println("'SYSTEM' : LOT 삭제 실패!");
             e.printStackTrace();
             return 0;
-        }
-    }
-
-
-    public List<LotDto> selectAll() {
-        List<LotDto> list = new ArrayList<>();
-        String sql = "SELECT * FROM LOT_LIST";
-
-        try (
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()
-        ) {
-            while (rs.next()) {
-                LotDto dto = new LotDto(
-                    rs.getString("LOT_ID"),
-                    rs.getString("LOT_STATUS"),
-                    rs.getString("LOT_CODE"),
-                    rs.getString("PRODUCT_NAME")
-                );
-                list.add(dto); // 리스트에 추가
-            }
-        } catch (SQLException e) {
-            System.out.println("'SYSTEM' : LOT 조회 실패!");
-            e.printStackTrace();
-        }
-
-        return list; // 리스트 반환
-    }
-
-
-    // 제품명으로 조회 (LIKE 조건)
-    public void prefixSelect(String prefix) {
-        String sql = "SELECT * FROM LOT_LIST WHERE PRODUCT_NAME LIKE ?";
-
-        try (
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            pstmt.setString(1, prefix + "%");
-
-            ResultSet rs = pstmt.executeQuery();
-
-        	while (rs.next()) {
-        	    LotDto dto = new LotDto(
-        	        rs.getString("LOT_ID"),
-        	        rs.getString("LOT_STATUS"),
-        	        rs.getString("LOT_CODE"),
-        	        rs.getString("PRODUCT_NAME")
-        	    );
-        	    System.out.println(dto);
-            }
-
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("'SYSTEM' : LOT 조건 조회 실패!");
-            e.printStackTrace();
         }
     }
 }
