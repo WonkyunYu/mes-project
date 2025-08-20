@@ -101,7 +101,7 @@ public class LotDao {
 
     // 제품명으로 조회 (LIKE 조건)
     public void prefixSelect(String prefix) {
-        String sql = "SELECT * FROM LOT_LIST WHERE LOT_ID LIKE ?";
+        String sql = "SELECT * FROM LOT_LIST WHERE PRODUCT_NAME LIKE ?";
 
         try (
             Connection conn = DBUtil.getConnection();
